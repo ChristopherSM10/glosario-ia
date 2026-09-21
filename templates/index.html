@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }}</title>
+    <style>
+        :root {
+            --bg-color: #030712;
+            --card-bg: rgba(15, 23, 42, 0.75);
+            --accent-blue: #38bdf8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(24, 48, 89, 0.4) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(13, 110, 253, 0.15) 0px, transparent 50%);
+            color: var(--text-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding-top: 80px;
+            padding-bottom: 30px;
+            min-height: 100vh;
+        }
+
+        /* BARRA DE NAVEGACIÓN */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .navbar-nav a:hover {
+            color: var(--accent-blue);
+        }
+
+        .navbar-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-nav {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-nav:hover {
+            background: var(--accent-blue);
+            color: #000;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            text-align: center;
+            padding: 35px 25px;
+            background: linear-gradient(135deg, rgba(24, 37, 77, 0.6), rgba(38, 59, 120, 0.6));
+            border-radius: 20px;
+            border: 1px solid rgba(61, 90, 168, 0.4);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin: 0 0 12px 0;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-definition {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            max-width: 780px;
+            margin: 0 auto 15px auto;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            text-align: justify;
+        }
+
+        .header-instruction {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .search-box {
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: white;
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-blue);
+        }
+
+        /* TARJETAS ACORDEÓN */
+        .concept-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: border-color 0.2s ease;
+        }
+
+        .concept-card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+
+        .concept-header {
+            padding: 18px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .concept-title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .concept-badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .concept-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin: 0;
+            color: #fff;
+        }
+
+        .icon-arrow {
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .concept-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0, 1, 0, 1), padding 0.3s ease;
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        .concept-card.active .concept-content {
+            max-height: 600px;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .concept-card.active .icon-arrow {
+            transform: rotate(180deg);
+        }
+
+        .concept-body {
+            color: #cbd5e1;
+            line-height: 1.6;
+            white-space: pre-line;
+            margin-bottom: 15px;
+        }
+
+        .concept-footer {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .concept-footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        /* VENTANAS MODALES FLOTANTES */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-content { 
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            margin: auto;
+            box-sizing: border-box;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+
+        .btn-cerrar {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .btn-cerrar:hover {
+            color: #ef4444;
+        }
+
+        .modal-content img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* ESTILOS PARA LA CLASIFICACIÓN DE IA */
+        .clasificacion-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .clasificacion-item h4 {
+            color: var(--accent-blue);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .clasificacion-item p {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .nota-definicion {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            background: rgba(56, 189, 248, 0.05);
+            padding: 8px 12px;
+            border-left: 3px solid var(--accent-blue);
+            margin-bottom: 15px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .infografia-box {
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- BARRA DE NAVEGACIÓN -->
+<nav class="navbar">
+    <a href="#" class="navbar-brand">AI Glossary</a>
+    <ul class="navbar-nav">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="javascript:void(0)" onclick="mostrarAntecedentes()">Antecedentes</a></li>
+        <li><a href="javascript:void(0)" onclick="mostrarClasificacion()">Clasificación de la IA</a></li>
+        <li><a href="#conceptos">Conceptos</a></li>
+        <li><a href="#autor">Autor</a></li>
+    </ul>
+    <div class="navbar-actions">
+        <button class="btn-nav" onclick="abrirTodos()">Abrir Todo</button>
+        <button class="btn-nav" onclick="cerrarTodos()">Cerrar Todo</button>
+    </div>
+</nav>
+
+<div class="container" id="inicio">
+    <header>
+        <img src="{{ url_for('static', filename='mi_imagen.png') }}" alt="Imagen del Glosario" style="max-width: 150px; height: auto; margin-bottom: 15px;">
+        <h1>{{ titulo }}</h1>
+        
+        <!-- DEFINICIÓN PRINCIPAL DE IA -->
+        <p class="header-definition">
+            <strong>¿Qué es la Inteligencia Artificial?</strong><br>
+            La Inteligencia Artificial es un campo interdisciplinario dedicado al diseño de sistemas capaces de realizar tareas asociadas con la inteligencia humana, como aprender, razonar, reconocer patrones, comprender lenguaje, resolver problemas y tomar decisiones.
+        </p>
+
+        <p class="header-instruction">Haz clic en cualquier concepto para desplegar su definición</p>
+    </header>
+
+    <!-- VENTANA MODAL FLOTANTE DE ANTECEDENTES -->
+    <div id="modal-antecedentes" class="modal-overlay" onclick="cerrarModal('modal-antecedentes', event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 style="margin:0; color:var(--accent-blue);">⏳ Antecedentes e Historia de la IA</h3>
+                <button class="btn-cerrar" onclick="cerrarModalDirecto('modal-antecedentes')">✖</button>
+            </div>
+            <div style="text-align: center; padding-top: 15px;">
+                <p style="color: var(--text-muted); margin-bottom: 15px;">Línea de tiempo con los hitos más importantes en el desarrollo de la inteligencia artificial.</p>
+                <img src="{{ url_for('static', filename='linea_tiempo.png') }}" alt="Línea de tiempo">
+            </div>
+        </div>
+    </div>
+
+    <!-- VENTANA MODAL FLOTANTE DE CLASIFICACIÓN DE LA IA -->
+    <div id="modal-clasificacion" class="modal-overlay" onclick="cerrarModal('modal-clasificacion', event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 style="margin:0; color:var(--accent-blue);">📊 Clasificación de la Inteligencia Artificial</h3>
+                <button class="btn-cerrar" onclick="cerrarModalDirecto('modal-clasificacion')">✖</button>
+            </div>
+            <div style="padding-top: 15px;">
+                
+                <!-- 1. IA Débil -->
+                <div class="clasificacion-item">
+                    <h4>1. IA débil o estrecha (Narrow AI)</h4>
+                    <p>Está diseñada para resolver tareas específicas: traducción, recomendación, reconocimiento de imágenes, reconocimiento de voz, generación de texto, recomendaciones de productos. Impulsa la mayor parte de la IA que nos rodea hoy, no tiene nada de débil.</p>
+                    <div class="infografia-box">
+                        <img src="{{ url_for('static', filename='infografia_debilo.png') }}" alt="Infografía IA Débil">
+                    </div>
+                </div>
+
+                <!-- 2. IA Fuerte -->
+                <div class="clasificacion-item">
+                    <h4>2. IA fuerte o general (AGI - General Artificial Intelligence)</h4>
+                    <p>Busca crear máquinas con inteligencia humana completa, capaces de realizar cualquier tarea intelectual que un humano pueda hacer. Es teórica y no existe de manera práctica. Es una categoría hipotética.</p>
+                    <div class="nota-definicion">
+                        💡 <strong>Hipotética:</strong> Se refiere a algo que se plantea como una posibilidad o supuesto para analizar qué podría ocurrir, sin afirmar que sea verdadero.
+                    </div>
+                    <div class="infografia-box">
+                        <img src="{{ url_for('static', filename='infografia_fuerte.png') }}" alt="Infografía IA Fuerte">
+                    </div>
+                </div>
+
+                <!-- 3. IA Superinteligente -->
+                <div class="clasificacion-item">
+                    <h4>3. IA superinteligente</h4>
+                    <p>Hace referencia a un sistema que superaría a los humanos en absolutamente todas las áreas cognitivas, sería autoconsciente y tendría la capacidad de resolver problemas, aprender y planificar para el futuro. Es una categoría especulativa.</p>
+                    <div class="nota-definicion">
+                        💡 <strong>Especulativa:</strong> Se refiere a algo basado principalmente en suposiciones, posibilidades o conjeturas, especialmente cuando existe poca evidencia para demostrarlo.
+                    </div>
+                    <div class="infografia-box">
+                        <img src="{{ url_for('static', filename='infografia_superinteligente.png') }}" alt="Infografía IA Superinteligente">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Buscador en tiempo real -->
+    <div class="search-box" id="conceptos">
+        <input type="text" id="searchInput" onkeyup="filtrarConceptos()" placeholder="🔍 Escribe para filtrar conceptos en tiempo real...">
+    </div>
+
+    <div id="listaConceptos">
+        {% for c in conceptos %}
+        <div class="concept-card" onclick="toggleConcepto(this)">
+            <div class="concept-header">
+                <div class="concept-title-group">
+                    <span class="concept-badge">#{{ c.id }}</span>
+                    <h3 class="concept-title">{{ c.termino }}</h3>
+                </div>
+                <span class="icon-arrow">▼</span>
+            </div>
+            <div class="concept-content">
+                <div class="concept-body">{{ c.definicion }}</div>
+                <div class="concept-footer">
+                    <strong>📚 Fuente:</strong> {{ c.fuente }} | 
+                    <a href="{{ c.url }}" target="_blank" onclick="event.stopPropagation();">Ver enlace original 🔗</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <footer id="autor">
+        <p>Desarrollado por: <strong>{{ autor }}</strong></p>
+        <p>© 2026 Christopher Silverio. Todos los derechos reservados.</p>
+        
+        <!-- Enlace a Facebook con Logo -->
+        <p style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px;">
+            <a href="https://www.facebook.com" target="_blank" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s ease;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#0866FF">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                <span>Facebook: <strong>Christopher Silverio</strong></span>
+            </a>
+        </p>
+    </footer>
+</div>
+
+<!-- LÓGICA JAVASCRIPT -->
+<script>
+    function toggleConcepto(card) {
+        card.classList.toggle('active');
+    }
+
+    /* Funciones Modales */
+    function mostrarAntecedentes() {
+        document.getElementById('modal-antecedentes').style.display = 'flex';
+    }
+
+    function mostrarClasificacion() {
+        document.getElementById('modal-clasificacion').style.display = 'flex';
+    }
+
+    function cerrarModal(modalId, event) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    function cerrarModalDirecto(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    /* Funciones Acordeón General */
+    function abrirTodos() {
+        let lista = document.getElementById('listaConceptos');
+        let cards = lista.getElementsByClassName('concept-card');
+        for (let card of cards) {
+            if (card.style.display !== "none") {
+                card.classList.add('active');
+            }
+        }
+    }
+
+    function cerrarTodos() {
+        let cards = document.getElementsByClassName('concept-card');
+        for (let card of cards) {
+            card.classList.remove('active');
+        }
+    }
+
+    function filtrarConceptos() {
+        let input = document.getElementById('searchInput').value.toLowerCase();
+        let lista = document.getElementById('listaConceptos');
+        let cards = lista.getElementsByClassName('concept-card');
+
+        for (let i = 0; i < cards.length; i++) {
+            let tituloElem = cards[i].querySelector('.concept-title');
+            let cuerpoElem = cards[i].querySelector('.concept-body');
+
+            if (tituloElem && cuerpoElem) {
+                let titulo = tituloElem.innerText.toLowerCase();
+                let cuerpo = cuerpoElem.innerText.toLowerCase();
+
+                if (titulo.includes(input) || cuerpo.includes(input)) {
+                    cards[i].style.display = "";
+                    if (input.length > 1) {
+                        cards[i].classList.add('active');
+                    } else {
+                        cards[i].classList.remove('active');
+                    }
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
