@@ -3,6 +3,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+
 # ==========================================
 # CONFIGURACIÓN Y DATOS DEL PROYECTO
 # ==========================================
@@ -149,6 +150,20 @@ glosario = [
         "definicion": "Es un tipo de inteligencia artificial capaz de procesar y combinar diferentes tipos de información, como texto, imágenes, audio y video, para comprender una situación y generar respuestas.",
         "fuente": "Stanford HAI. (s. f.). Artificial Intelligence Glossary.",
         "url": "https://hai.stanford.edu/ai-definitions"
+    },
+   {
+        "id": 21,
+        "termino": "Sistema Inteligente",
+        "definicion": """Un Sistema Inteligente es una entidad computacional autónoma capaz de percibir su entorno mediante sensores, procesar e interpretar dicha información a través de algoritmos de Inteligencia Artificial (como aprendizaje automático, redes neuronales o sistemas basados en reglas), y tomar decisiones fundamentadas para ejecutar acciones a través de actuadores con el fin de alcanzar objetivos específicos. A diferencia de los sistemas de software tradicionales, un sistema inteligente posee capacidad de adaptación, razonamiento y aprendizaje continuo a partir de la experiencia y los datos que recolecta en tiempo real.
+        
+        <div style="margin-top: 25px; text-align: center; width: 100%;">
+            <p style="color: #38bdf8; font-weight: bold; margin-bottom: 12px; font-size: 1rem;">📌 Esquema Básico de un Sistema Inteligente</p>
+            <div style="background: #ffffff; padding: 12px; border-radius: 12px; display: block; margin: 0 auto; max-width: 650px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);">
+                <img src="/static/esquema_sistema_inteligente.png" alt="Esquema Básico de Sistema Inteligente" style="width: 100%; height: auto; max-height: 500px; object-fit: contain; border-radius: 8px; display: block; margin: 0 auto;">
+            </div>
+        </div>""",
+        "fuente": "Russell, S., & Norvig, P. (2020). Artificial Intelligence: A Modern Approach.",
+        "url": "https://aima.cs.berkeley.edu/"
     }
 ]
 
@@ -175,6 +190,13 @@ def inicio():
         total=len(glosario),
         busqueda=busqueda
     )
+@app.route('/etica')
+def etica():
+    return render_template('etica.html')
+
+@app.route('/ejemplo-ml')
+def ejemplo_ml():
+    return render_template('ejemplo_ml.html')
 
 if __name__ == '__main__':
     print("🚀 Iniciando servidor Flask...")

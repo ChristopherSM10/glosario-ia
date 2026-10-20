@@ -210,16 +210,16 @@
         }
 
         .concept-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s cubic-bezier(0, 1, 0, 1), padding 0.3s ease;
-            background: rgba(0, 0, 0, 0.25);
+           max-height: 0;
+           overflow: hidden;
+           transition: max-height 0.35s cubic-bezier(0, 1, 0, 1), padding 0.3s ease;
+           background: rgba(0, 0, 0, 0.25);
         }
 
         .concept-card.active .concept-content {
-            max-height: 600px;
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
+           max-height: 2000px; /* Aumentado de 600px a 2000px */
+           padding: 20px;
+           border-top: 1px solid var(--border-color);
         }
 
         .concept-card.active .icon-arrow {
@@ -364,6 +364,9 @@
         <li><a href="javascript:void(0)" onclick="mostrarClasificacion()">Clasificación de la IA</a></li>
         <li><a href="#conceptos">Conceptos</a></li>
         <li><a href="#autor">Autor</a></li>
+        <li><a href="javascript:void(0)" onclick="document.getElementById('modalEtica').style.display='flex'">Ética y Sociedad</a></li>
+        <li><a href="javascript:void(0)" onclick="document.getElementById('modalML').style.display='flex'">Ejemplo ML</a></li>
+        <li><a href="javascript:void(0)" onclick="document.getElementById('modal-busqueda').style.display='flex'">Algoritmo de Búsqueda</a></li>
     </ul>
     <div class="navbar-actions">
         <button class="btn-nav" onclick="abrirTodos()">Abrir Todo</button>
@@ -461,7 +464,7 @@
                 <span class="icon-arrow">▼</span>
             </div>
             <div class="concept-content">
-                <div class="concept-body">{{ c.definicion }}</div>
+                <div class="concept-body">{{ c.definicion | safe }}</div>
                 <div class="concept-footer">
                     <strong>📚 Fuente:</strong> {{ c.fuente }} | 
                     <a href="{{ c.url }}" target="_blank" onclick="event.stopPropagation();">Ver enlace original 🔗</a>
@@ -470,7 +473,7 @@
         </div>
         {% endfor %}
     </div>
-
+    
     <footer id="autor">
         <p>Desarrollado por: <strong>{{ autor }}</strong></p>
         <p>© 2026 Christopher Silverio. Todos los derechos reservados.</p>
@@ -486,6 +489,167 @@
         </p>
     </footer>
 </div>
+<!-- MODAL ÉTICA Y SOCIEDAD (AMPLIADO) -->
+<div id="modalEtica" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); z-index: 99999; justify-content: center; align-items: center; padding: 20px;">
+    <div style="background: #1e293b; color: #f8fafc; max-width: 850px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 35px; border-radius: 12px; border: 1px solid #334155; position: relative;">
+        
+        <button onclick="document.getElementById('modalEtica').style.display='none'" style="position: absolute; top: 15px; right: 20px; background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">✕ Salir</button>
+        
+        <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.8rem;">Ensayo: Ética y Aspectos Sociales de la Inteligencia Artificial</h2>
+        <hr style="border-color: #334155; margin-bottom: 25px;">
+
+        <h3 style="color: #38bdf8;">1. Introducción</h3>
+        <p style="line-height: 1.7; text-align: justify;">
+            El vertiginoso avance de la Inteligencia Artificial (IA) ha dejado de ser una promesa de la ciencia ficción para convertirse en una fuerza transformadora en la sociedad contemporánea. Desde algoritmos de recomendación en redes sociales hasta sistemas automatizados de diagnóstico médico y vehículos autónomos, la IA está redefiniendo cómo trabajamos, nos comunicamos y tomamos decisiones. Sin embargo, este acelerado desarrollo tecnológico no ocurre en un vacío neutral; trae consigo profundos dilemas éticos y desafíos sociales que cuestionan la equidad, la privacidad, la responsabilidad jurídica y la propia naturaleza del trabajo humano.
+        </p>
+
+        <h3 style="color: #38bdf8;">2. Desarrollo y Ejes Fundamentales</h3>
+
+        <h4 style="color: #a5f3fc;">a) Sesgos Algorítmicos y Discriminación Sistémica</h4>
+        <p style="line-height: 1.7; text-align: justify;">
+            Los modelos de aprendizaje automático no son intrínsecamente imparciales; aprenden a partir de grandes volúmenes de datos históricos generados por la sociedad. Si estos datos reflejan prejuicios raciales, de género, geográficos o socioeconómicos, el sistema automatizado no solo perpetuará dichos sesgos, sino que los amplificará a gran escala. Casos documentados en sistemas de contratación automatizada, concesión de créditos bancarios y algoritmos de justicia penal predictiva han demostrado que la automatización sin supervisión ética puede profundizar la desigualdad social.
+        </p>
+
+        <h4 style="color: #a5f3fc;">b) Privacidad, Vigilancia Masiva y Manejo de Datos</h4>
+        <p style="line-height: 1.7; text-align: justify;">
+            El motor que impulsa la IA moderna es la información. La recolección masiva de datos personales para alimentar modelos predictivos plantea serias amenazas a la privacidad individual. Tecnologías como el reconocimiento facial en espacios públicos y la minería de datos en redes sociales facilitan herramientas de vigilancia masiva que pueden vulnerar libertades fundamentales y erosionar la confianza democrática si no existen marcos regulatorios estrictos sobre la propiedad y el consentimiento de los datos.
+        </p>
+
+        <h4 style="color: #a5f3fc;">c) Transformación del Mercado Laboral y Brecha Digital</h4>
+        <p style="line-height: 1.7; text-align: justify;">
+            La automatización avanzada y el surgimiento de la IA generativa amenazan con desplazar no solo empleos rutinarios u operacionales, sino también profesiones técnicas y creativas. Aunque la tecnología impulsa la productividad global y genera nuevos nichos especializados, existe un riesgo inminente de polarización del empleo y aumento de la brecha económica entre quienes poseen las competencias digitales y quienes quedan excluidos de la reconversión laboral.
+        </p>
+
+        <h4 style="color: #a5f3fc;">d) Transparencia, Explicabilidad y Responsabilidad Legal</h4>
+        <p style="line-height: 1.7; text-align: justify;">
+            Muchos sistemas de IA avanzados operan como "cajas negras" (black boxes), donde resulta casi imposible rastrear el razonamiento exacto detrás de una decisión tomada por el modelo. Esto plantea un problema crítico de responsabilidad civil y penal: si un algoritmo de diagnóstico médico comete un error fatal o un coche autónomo sufre un accidente, ¿quién asume la responsabilidad? ¿El desarrollador, la empresa propietaria o el usuario final? Garantizar la explicabilidad de los algoritmos es una condición imprescindible para su adopción ética.
+        </p>
+
+        <h3 style="color: #38bdf8;">3. Conclusión</h3>
+        <p style="line-height: 1.7; text-align: justify;">
+            La Inteligencia Artificial no es intrínsecamente buena ni mala; su impacto final dependerá de las decisiones éticas, legales y políticas que acompañen su diseño e implementación. La innovación tecnológica no debe ser un fin en sí mismo, sino un medio para mejorar el bienestar colectivo. Desarrolladores, gobiernos, instituciones académicas y la sociedad civil deben colaborar en la creación de regulaciones sólidas que garanticen una IA transparente, justa, segura y orientada al servicio y respeto de la dignidad humana.
+        </p>
+
+        <div style="text-align: right; margin-top: 30px;">
+            <button onclick="document.getElementById('modalEtica').style.display='none'" style="background: #475569; color: white; border: none; padding: 10px 22px; border-radius: 6px; cursor: pointer; font-weight: bold;">Volver al Glosario</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EJEMPLO MACHINE LEARNING (Fuera de container) -->
+<div id="modalML" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); z-index: 99999; justify-content: center; align-items: center; padding: 20px;">
+    <div style="background: #1e293b; color: #f8fafc; max-width: 750px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 30px; border-radius: 12px; border: 1px solid #334155; position: relative;">
+        
+        <button onclick="document.getElementById('modalML').style.display='none'" style="position: absolute; top: 15px; right: 20px; background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">✕ Salir</button>
+        
+        <h2 style="color: #38bdf8; margin-top: 0;">Ejemplo de Aplicación de Machine Learning</h2>
+        <hr style="border-color: #334155; margin-bottom: 20px;">
+
+        <h3>Caso de Estudio: Coche Autónomo</h3>
+        <p>Un vehículo autónomo aprende a navegar de manera independiente desde un punto A hasta un punto B mediante <strong>Aprendizaje por Refuerzo (Reinforcement Learning)</strong>.</p>
+
+        <h4 style="color: #a5f3fc;">Sistema de Recompensas y Castigos:</h4>
+        <ul style="line-height: 1.6;">
+            <li><strong>Premios:</strong> El sistema recibe recompensas positivas por mantenerse centrado en su carril, respetar las señales de tránsito y avanzar de forma fluida.</li>
+            <li><strong>Castigos:</strong> Recibe castigos severos si frena bruscamente, invade otro carril o choca.</li>
+        </ul>
+
+        <h4 style="color: #a5f3fc;">Tipo de Datos de Entrada:</h4>
+        <p><strong>Datos Multimodales en tiempo real:</strong> combinación simultánea de imágenes 2D de cámaras, nubes de puntos 3D de LiDAR y datos numéricos de telemetría.</p>
+
+        <div style="text-align: right; margin-top: 25px;">
+            <button onclick="document.getElementById('modalML').style.display='none'" style="background: #475569; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Volver al Glosario</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ALGORITMO DE BÚSQUEDA (ESTANDARIZADO) -->
+<div id="modal-busqueda" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); z-index: 99999; justify-content: center; align-items: center; padding: 20px;">
+    <div style="background: #1e293b; color: #f8fafc; max-width: 850px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 35px; border-radius: 12px; border: 1px solid #334155; position: relative;">
+        
+        <button onclick="document.getElementById('modal-busqueda').style.display='none'" style="position: absolute; top: 15px; right: 20px; background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">✕ Salir</button>
+        
+        <h2 style="color: #38bdf8; margin-top: 0; font-size: 1.8rem; border-bottom: 2px solid #334155; padding-bottom: 10px;">
+            🔍 Algoritmo de Búsqueda
+        </h2>
+
+        <p style="line-height: 1.7; text-align: justify; color: #e2e8f0;">
+            Un algoritmo de búsqueda es un conjunto de instrucciones o pasos ordenados que se utilizan para encontrar un dato o elemento específico dentro de un conjunto de información, como listas, arreglos, archivos o bases de datos.
+        </p>
+        <p style="line-height: 1.7; text-align: justify; color: #e2e8f0;">
+            Su principal objetivo es facilitar la localización de información de manera rápida, precisa y eficiente, evitando revisar los datos de forma innecesaria.
+        </p>
+        <p style="line-height: 1.7; text-align: justify; color: #e2e8f0;">
+            Los algoritmos de búsqueda son importantes en la informática porque se utilizan en diferentes sistemas, como buscadores de internet, tiendas en línea, aplicaciones móviles, redes sociales y bases de datos.
+        </p>
+
+        <h3 style="color: #38bdf8; margin-top: 25px;">⚙️ Elementos que intervienen en un algoritmo de búsqueda</h3>
+        <ul style="color: #cbd5e1; line-height: 1.7; padding-left: 20px;">
+            <li><strong>Datos:</strong> Son el conjunto de elementos o información donde se realizará la búsqueda. Pueden ser números, nombres, productos, registros o archivos.</li>
+            <li><strong>Elemento buscado:</strong> Es el dato específico que se desea localizar dentro del conjunto de información.</li>
+            <li><strong>Criterio de búsqueda:</strong> Es la condición que permite identificar el elemento buscado, como un nombre, número, código o palabra clave.</li>
+            <li><strong>Proceso de búsqueda:</strong> Consiste en los pasos que sigue el algoritmo para revisar, comparar y localizar el elemento solicitado.</li>
+            <li><strong>Resultado:</strong> Es la respuesta que proporciona el algoritmo, indicando si el elemento fue encontrado, su ubicación o si no existen coincidencias.</li>
+            <li><strong>Eficiencia:</strong> Se refiere a la rapidez y cantidad de recursos que necesita el algoritmo para realizar la búsqueda.</li>
+        </ul>
+
+        <h3 style="color: #38bdf8; margin-top: 25px;">🛒 Ejemplo de un algoritmo de búsqueda identificando elementos</h3>
+        <p style="color: #94a3b8; font-style: italic;">Ejemplo: Buscar un producto en una tienda en línea</p>
+        <p style="line-height: 1.7; text-align: justify; color: #e2e8f0;">
+            Una tienda en línea cuenta con una gran variedad de productos registrados en su sistema. Cuando un usuario desea comprar un artículo, utiliza el buscador para encontrarlo entre los productos disponibles.
+        </p>
+
+        <h4 style="color: #a5f3fc; margin-top: 15px;">Pasos del algoritmo:</h4>
+        <ol style="color: #cbd5e1; line-height: 1.7; padding-left: 20px;">
+            <li>El usuario ingresa el nombre del producto que desea comprar, por ejemplo, "Laptop".</li>
+            <li>El sistema recibe el nombre y comienza a buscar dentro de la lista de productos registrados.</li>
+            <li>Compara el nombre ingresado con los nombres de los productos disponibles.</li>
+            <li>Cuando encuentra coincidencias, selecciona los productos relacionados con la búsqueda.</li>
+            <li>El sistema muestra los resultados encontrados, incluyendo información como nombre, precio y disponibilidad.</li>
+            <li>Si no encuentra productos relacionados, muestra un mensaje indicando que no existen resultados.</li>
+        </ol>
+
+        <h4 style="color: #a5f3fc; margin-top: 15px;">Identificación de los elementos:</h4>
+        <ul style="color: #cbd5e1; line-height: 1.7; padding-left: 20px;">
+            <li><strong>Datos:</strong> Lista de productos registrados en la tienda en línea, como laptops, celulares, audífonos y otros artículos.</li>
+            <li><strong>Elemento buscado:</strong> Una laptop que el usuario desea comprar.</li>
+            <li><strong>Criterio de búsqueda:</strong> Coincidencia entre la palabra "Laptop" y los nombres de los productos registrados.</li>
+            <li><strong>Proceso de búsqueda:</strong> El sistema revisa y compara los productos para identificar aquellos que coinciden con la palabra ingresada.</li>
+            <li><strong>Resultado:</strong> Muestra las laptops disponibles o un mensaje indicando que no se encontraron productos.</li>
+            <li><strong>Eficiencia:</strong> Permite localizar productos rápidamente sin que el usuario tenga que revisar todo el catálogo manualmente.</li>
+        </ul>
+
+        <h3 style="color: #38bdf8; margin-top: 25px;">📊 Clasificación de algoritmos de búsqueda</h3>
+        <p style="line-height: 1.7; text-align: justify; color: #e2e8f0;">
+            Los algoritmos de búsqueda se clasifican según la forma en que recorren, comparan y organizan la información para encontrar un elemento.
+        </p>
+        <ul style="color: #cbd5e1; line-height: 1.7; padding-left: 20px;">
+            <li><strong>Búsqueda lineal o secuencial:</strong> Consiste en revisar los elementos de una lista uno por uno hasta encontrar el dato buscado o llegar al final. Es uno de los métodos más sencillos y puede utilizarse tanto en listas ordenadas como desordenadas.<br><em style="color: #94a3b8;">Ejemplo: buscar el número 15 en una lista revisando cada número hasta encontrarlo.</em></li>
+            <li style="margin-top: 10px;"><strong>Búsqueda binaria:</strong> Es un método que funciona con datos ordenados. Consiste en dividir repetidamente la lista en dos partes y comparar el elemento central con el dato buscado, descartando la mitad donde no puede encontrarse.<br><em style="color: #94a3b8;">Ejemplo: buscar un número en una lista ordenada del 1 al 100.</em></li>
+            <li style="margin-top: 10px;"><strong>Búsqueda por interpolación:</strong> Es un algoritmo que estima la posición donde podría encontrarse un elemento, tomando en cuenta su valor y la distribución de los datos. Se utiliza principalmente en listas numéricas ordenadas y funciona mejor cuando los valores están distribuidos uniformemente.<br><em style="color: #94a3b8;">Ejemplo: localizar un número de identificación dentro de una lista numérica ordenada.</em></li>
+            <li style="margin-top: 10px;"><strong>Búsqueda por hashing:</strong> Utiliza una función matemática llamada hash, que transforma una clave en un valor que permite determinar dónde se almacena la información. Es muy utilizada para realizar búsquedas rápidas en tablas hash.<br><em style="color: #94a3b8;">Ejemplo: buscar los datos de un usuario mediante su número de identificación.</em></li>
+            <li style="margin-top: 10px;"><strong>Búsqueda en árboles:</strong> Consiste en localizar información dentro de una estructura jerárquica formada por nodos. Dependiendo del tipo de árbol, permite organizar y encontrar datos de manera eficiente.<br><em style="color: #94a3b8;">Ejemplo: buscar un archivo dentro de una estructura de carpetas organizada jerárquicamente.</em></li>
+        </ul>
+
+        <!-- INFOGRAFÍA -->
+        <div style="margin: 30px 0; text-align: center;">
+            <p style="color: #38bdf8; font-weight: bold; margin-bottom: 12px; font-size: 1.05rem;">📌 Infografía: Clasificación de Algoritmos de Búsqueda</p>
+            <div style="background: #ffffff; padding: 12px; border-radius: 12px; display: inline-block; max-width: 100%; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);">
+                <img src="/static/infografia_busqueda.png" alt="Infografía Clasificación de Algoritmos de Búsqueda" style="max-width: 100%; height: auto; border-radius: 8px; display: block; margin: 0 auto;">
+            </div>
+        </div>
+
+        <h3 style="color: #38bdf8; margin-top: 25px;">📌 Conclusión</h3>
+        <p style="line-height: 1.7; text-align: justify; color: #e2e8f0;">
+            Los algoritmos de búsqueda son fundamentales en la programación y en los sistemas informáticos, ya que permiten encontrar información de manera organizada, rápida y precisa. Existen diferentes tipos de algoritmos, cada uno con características y métodos específicos. La elección del algoritmo adecuado depende de la cantidad de información, su organización y las necesidades del sistema.
+        </p>
+
+        <div style="text-align: right; margin-top: 30px;">
+            <button onclick="document.getElementById('modal-busqueda').style.display='none'" style="background: #475569; color: white; border: none; padding: 10px 22px; border-radius: 6px; cursor: pointer; font-weight: bold;">Volver al Glosario</button>
+        </div>
+    </div>
+</div>
+
 
 <!-- LÓGICA JAVASCRIPT -->
 <script>
@@ -509,6 +673,10 @@
     function cerrarModalDirecto(modalId) {
         document.getElementById(modalId).style.display = 'none';
     }
+
+    function mostrarAlgoritmoBusqueda() {
+    document.getElementById('modalBusqueda').style.display = 'flex';
+    } 
 
     /* Funciones Acordeón General */
     function abrirTodos() {
